@@ -4,7 +4,7 @@ using FC.Codeflix.Catalog.Domain.Repositories.DTOs;
 
 using FluentAssertions;
 
-using Moq;
+using NSubstitute;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.SearchCategory;
 
@@ -24,12 +24,11 @@ public class SearchCategoryTest(SearchCategoryTestFixture fixture)
             categories.Count,
             categories
         );
-        repository.Setup(x => x
-            .SearchAsync(
-                It.IsAny<SearchInput>(),
-                It.IsAny<CancellationToken>()))
-            .ReturnsAsync(expectedQueryResult);
-        var useCase = new SearchCategoryUseCase(repository.Object);
+        repository.SearchAsync(
+                Arg.Any<SearchInput>(),
+                Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult(expectedQueryResult));
+        var useCase = new SearchCategoryUseCase(repository);
 
         var output = await useCase.Handle(input, CancellationToken.None);
 
@@ -38,15 +37,14 @@ public class SearchCategoryTest(SearchCategoryTestFixture fixture)
         output.PerPage.Should().Be(input.PerPage);
         output.Total.Should().Be(expectedQueryResult.Total);
         output.Items.Should().BeEquivalentTo(categories);
-        repository.Verify(x => x.SearchAsync(
-            It.Is<SearchInput>(search =>
-                search.Page == input.Page &&
-                search.PerPage == input.PerPage &&
-                search.Search == input.Search &&
-                search.Order == input.Order &&
-                search.OrderBy == input.OrderBy),
-            It.IsAny<CancellationToken>()),
-            Times.Once
-        );
+        await repository
+            .Received(1)
+            .SearchAsync(Arg.Is<SearchInput>(search =>
+                  search.Page == input.Page &&
+                  search.PerPage == input.PerPage &&
+                  search.Search == input.Search &&
+                  search.Order == input.Order &&
+                  search.OrderBy == input.OrderBy),
+                Arg.Any<CancellationToken>());
     }
 }

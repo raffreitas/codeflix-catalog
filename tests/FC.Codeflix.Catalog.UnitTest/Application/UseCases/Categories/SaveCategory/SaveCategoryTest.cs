@@ -4,7 +4,7 @@ using FC.Codeflix.Catalog.Domain.Exceptions;
 
 using FluentAssertions;
 
-using Moq;
+using NSubstitute;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.SaveCategory;
 
@@ -17,14 +17,13 @@ public class SaveCategoryTest(SaveCategoryFixture fixture)
     {
         var repository = fixture.GetMockRepository();
         var input = fixture.GetValidInput();
-        var useCase = new SaveCategoryUseCase(repository.Object);
+        var useCase = new SaveCategoryUseCase(repository);
 
         var output = await useCase.Handle(input, CancellationToken.None);
 
-        repository.Verify(x => x.SaveAsync(
-            It.IsAny<Category>(),
-            It.IsAny<CancellationToken>()),
-            Times.Once);
+        await repository
+            .Received(1)
+            .SaveAsync(Arg.Any<Category>(), Arg.Any<CancellationToken>());
 
         output.Should().NotBeNull();
         output.Id.Should().Be(input.Id);
@@ -40,15 +39,14 @@ public class SaveCategoryTest(SaveCategoryFixture fixture)
     {
         var repository = fixture.GetMockRepository();
         var input = fixture.GetInvalidInput();
-        var useCase = new SaveCategoryUseCase(repository.Object);
+        var useCase = new SaveCategoryUseCase(repository);
 
         var action = async () => await useCase.Handle(input, CancellationToken.None);
 
 
-        repository.Verify(x => x.SaveAsync(
-            It.IsAny<Category>(),
-            It.IsAny<CancellationToken>()),
-            Times.Never);
+        await repository
+            .DidNotReceive()
+            .SaveAsync(Arg.Any<Category>(), Arg.Any<CancellationToken>());
 
         await action.Should().ThrowAsync<EntityValidationException>()
             .WithMessage("Name should not be null or empty.");

@@ -2,12 +2,13 @@
 using FC.Codeflix.Catalog.Domain.Repositories;
 using FC.Codeflix.Catalog.UnitTests.Common;
 
-using Moq;
+using NSubstitute;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.Common;
 public class CategoryUseCaseFixture : BaseFixture
 {
-    public Mock<ICategoryRepository> GetMockRepository() => new();
+    public ICategoryRepository GetMockRepository()
+        => Substitute.For<ICategoryRepository>();
 
     public string GetValidName() => Faker.Commerce.Categories(1)[0];
     public string GetValidDescription() => Faker.Commerce.ProductDescription();
@@ -22,7 +23,6 @@ public class CategoryUseCaseFixture : BaseFixture
 }
 
 [CollectionDefinition(nameof(CategoryUseCaseFixture))]
-public class CategoryUseCaseFixtureCollection
-    : ICollectionFixture<CategoryUseCaseFixture>
+public class CategoryUseCaseFixtureCollection : ICollectionFixture<CategoryUseCaseFixture>
 {
 }

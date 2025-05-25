@@ -1,7 +1,7 @@
 ﻿using FC.Codeflix.Catalog.Application.UseCases.Categories.DeleteCategory;
 using FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.Common;
 
-using Moq;
+using NSubstitute;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.DeleteCategory;
 
@@ -14,10 +14,12 @@ public class DeleteCategoryTest(CategoryUseCaseFixture fixture)
     {
         var repository = fixture.GetMockRepository();
         var input = new DeleteCategoryInput(Guid.NewGuid());
-        var useCase = new DeleteCategoryUseCase(repository.Object);
+        var useCase = new DeleteCategoryUseCase(repository);
 
         await useCase.Handle(input, CancellationToken.None);
 
-        repository.Verify(x => x.DeleteAsync(input.Id, It.IsAny<CancellationToken>()), Times.Once);
+        await repository
+            .Received(1)
+            .DeleteAsync(input.Id, Arg.Any<CancellationToken>());
     }
 }
