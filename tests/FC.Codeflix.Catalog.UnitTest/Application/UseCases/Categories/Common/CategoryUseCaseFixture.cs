@@ -23,6 +23,6 @@ public class CategoryUseCaseFixture : BaseFixture
 
 [CollectionDefinition(nameof(CategoryUseCaseFixture))]
 public class CategoryUseCaseFixtureCollection
-    : ICollectionFixture<CategoryUseCaseFixtureCollection>
+    : ICollectionFixture<CategoryUseCaseFixture>
 {
 }
