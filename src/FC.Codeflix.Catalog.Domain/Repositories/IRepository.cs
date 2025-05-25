@@ -7,5 +7,5 @@ public interface IRepository<T> where T : class
     Task SaveAsync(T entity, CancellationToken cancellationToken = default);
     Task<T> GetAsync(Guid id, CancellationToken cancellationToken = default);
     Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
-    Task<SearchOutput<T>> Search(SearchInput input, CancellationToken cancellationToken = default);
+    Task<SearchOutput<T>> SearchAsync(SearchInput input, CancellationToken cancellationToken = default);
 }
