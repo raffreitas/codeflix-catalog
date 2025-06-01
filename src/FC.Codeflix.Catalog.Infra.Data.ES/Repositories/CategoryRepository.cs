@@ -3,6 +3,7 @@
 using FC.Codeflix.Catalog.Domain.Entities;
 using FC.Codeflix.Catalog.Domain.Repositories;
 using FC.Codeflix.Catalog.Domain.Repositories.DTOs;
+using FC.Codeflix.Catalog.Infra.Data.ES.Models;
 
 namespace FC.Codeflix.Catalog.Infra.Data.ES.Repositories;
 public class CategoryRepository(ElasticsearchClient client) : ICategoryRepository
@@ -12,9 +13,10 @@ public class CategoryRepository(ElasticsearchClient client) : ICategoryRepositor
         throw new NotImplementedException();
     }
 
-    public Task SaveAsync(Category entity, CancellationToken cancellationToken = default)
+    public async Task SaveAsync(Category entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var model = CategoryModel.FromEntity(entity);
+        await client.IndexAsync(model, cancellationToken);
     }
 
     public Task<SearchOutput<Category>> SearchAsync(SearchInput input, CancellationToken cancellationToken = default)
