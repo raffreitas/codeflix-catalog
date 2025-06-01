@@ -2,6 +2,7 @@
 
 using FC.Codeflix.Catalog.Domain.Entities;
 using FC.Codeflix.Catalog.Infra.Data.ES;
+using FC.Codeflix.Catalog.Infra.Data.ES.Models;
 using FC.Codeflix.Catalog.IntegrationTests.Common;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -18,28 +19,16 @@ public class CategoryTestFixture : BaseFixture, IDisposable
     public async Task CreateCategoryIndex()
     {
         var esClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
-        var response = await esClient.Indices.CreateAsync(ElasticsearchIndices.Category, c => c
+        await esClient.Indices.CreateAsync(ElasticsearchIndices.Category, c => c
             .Mappings<CategoryModel>(m => m
                 .Properties(ps => ps
-                    .Keyword(t => t
-                        .Name(category => category.Id)
-                    )
-                    .Text(t => t
-                        .Name(category => category.Name)
-                        .Fields(fs => fs
-                            .Keyword(k => k
-                                .Name(category => category.Name.Suffix("keyword")))
-                        )
-                    )
-                    .Text(t => t
-                        .Name(category => category.Description)
-                    )
-                    .Boolean(b => b
-                        .Name(category => category.IsActive)
-                    )
-                    .Date(d => d
-                        .Name(category => category.CreatedAt)
-                    )
+                    .Keyword(t => t.Id)
+                    .Text(t => t.Name, ps => ps
+                        .Fields(x => x.Keyword(k => k.Name!.Suffix("keywork")))
+                     )
+                    .Text(t => t.Description)
+                    .Boolean(b => b.IsActive)
+                    .Date(d => d.CreatedAt)
                 )
             )
         );
@@ -75,7 +64,8 @@ public class CategoryTestFixture : BaseFixture, IDisposable
     {
         var esClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
         esClient.DeleteByQuery<CategoryModel>(del => del
-            .Query(q => q.QueryString(qs => qs.Query("*"))));
+            .Query(q => q.QueryString(qs => qs.Query("*")))
+                .Conflicts(Conflicts.Proceed));
     }
 
     public void Dispose()

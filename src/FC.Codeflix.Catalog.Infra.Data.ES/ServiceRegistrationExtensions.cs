@@ -1,5 +1,9 @@
 ﻿using Elastic.Clients.Elasticsearch;
 
+using FC.Codeflix.Catalog.Domain.Repositories;
+using FC.Codeflix.Catalog.Infra.Data.ES.Models;
+using FC.Codeflix.Catalog.Infra.Data.ES.Repositories;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,6 +20,10 @@ public static class ServiceRegistrationExtensions
 
         var uri = new Uri(connectionString);
         var clientSettings = new ElasticsearchClientSettings(uri)
+            .DefaultMappingFor<CategoryModel>(i => i
+                .IndexName(ElasticsearchIndices.Category)
+                .IdProperty(p => p.Id)
+            )
             .PrettyJson()
             .ThrowExceptions()
             .RequestTimeout(TimeSpan.FromMinutes(2));
@@ -27,6 +35,7 @@ public static class ServiceRegistrationExtensions
 
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         return services;
     }
 }
