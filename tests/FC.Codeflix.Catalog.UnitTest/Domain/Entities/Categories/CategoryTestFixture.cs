@@ -7,8 +7,6 @@ namespace FC.Codeflix.Catalog.UnitTests.Domain.Entities.Categories;
 
 public sealed class CategoryTestFixture : BaseFixture
 {
-    public CategoryTestFixture() : base() { }
-
     public string GetValidCategoryName()
     {
         var categoryName = string.Empty;

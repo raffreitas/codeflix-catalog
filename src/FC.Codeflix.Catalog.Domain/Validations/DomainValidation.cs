@@ -2,7 +2,7 @@
 
 namespace FC.Codeflix.Catalog.Domain.Validations;
 
-public sealed class DomainValidation
+public static class DomainValidation
 {
     public static void NotNull(object? target, string fieldName)
     {

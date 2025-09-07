@@ -1,21 +1,14 @@
 ﻿namespace FC.Codeflix.Catalog.Domain.Repositories.DTOs;
 
-public record SearchOutput<T> where T : class
+public record SearchOutput<T>(
+    int CurrentPage,
+    int PerPage,
+    int Total,
+    IReadOnlyList<T> Items)
+    where T : class
 {
-    public int CurrentPage { get; set; }
-    public int PerPage { get; set; }
-    public int Total { get; set; }
-    public IReadOnlyList<T> Items { get; set; }
-
-    public SearchOutput(
-        int currentPage,
-        int perPage,
-        int total,
-        IReadOnlyList<T> items)
-    {
-        CurrentPage = currentPage;
-        PerPage = perPage;
-        Total = total;
-        Items = items;
-    }
+    public int CurrentPage { get; set; } = CurrentPage;
+    public int PerPage { get; set; } = PerPage;
+    public int Total { get; set; } = Total;
+    public IReadOnlyList<T> Items { get; set; } = Items;
 }

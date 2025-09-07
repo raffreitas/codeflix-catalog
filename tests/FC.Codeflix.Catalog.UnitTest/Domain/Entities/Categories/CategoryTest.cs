@@ -37,11 +37,11 @@ public class CategoryTest(CategoryTestFixture categoryTestFixture)
         var validCategory = categoryTestFixture.GetValidCategory();
 
         var category = new Category(
-           validCategory.Id,
-           validCategory.Name,
-           validCategory.Description,
-           validCategory.CreatedAt,
-           isActive);
+            validCategory.Id,
+            validCategory.Name,
+            validCategory.Description,
+            validCategory.CreatedAt,
+            isActive);
 
         category.Should().NotBeNull();
         category.Id.Should().Be(validCategory.Id);

@@ -5,6 +5,7 @@ using FC.Codeflix.Catalog.UnitTests.Common;
 using NSubstitute;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.Common;
+
 public class CategoryUseCaseFixture : BaseFixture
 {
     public ICategoryRepository GetMockRepository()
@@ -12,6 +13,7 @@ public class CategoryUseCaseFixture : BaseFixture
 
     public string GetValidName() => Faker.Commerce.Categories(1)[0];
     public string GetValidDescription() => Faker.Commerce.ProductDescription();
+
     public Category GetValidCategory()
         => new(
             id: Guid.NewGuid(),

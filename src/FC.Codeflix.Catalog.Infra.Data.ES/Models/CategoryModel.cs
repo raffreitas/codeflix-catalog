@@ -11,14 +11,14 @@ public sealed class CategoryModel
     public DateTime CreatedAt { get; set; }
 
     public static CategoryModel FromEntity(Category entity)
-     => new()
-     {
-         Id = entity.Id,
-         Name = entity.Name,
-         Description = entity.Description,
-         IsActive = entity.IsActive,
-         CreatedAt = entity.CreatedAt
-     };
+        => new()
+        {
+            Id = entity.Id,
+            Name = entity.Name,
+            Description = entity.Description,
+            IsActive = entity.IsActive,
+            CreatedAt = entity.CreatedAt
+        };
 
 
     public static Category ToEntity(CategoryModel model)

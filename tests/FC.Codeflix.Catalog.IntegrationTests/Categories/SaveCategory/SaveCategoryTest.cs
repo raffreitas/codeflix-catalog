@@ -11,8 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Categories.SaveCategory;
 
-[Collection(nameof(SaveCategoryTestFixture))]
-public class SaveCategoryTest(SaveCategoryTestFixture fixture) : IDisposable
+public sealed class SaveCategoryTest(SaveCategoryTestFixture fixture) : IClassFixture<SaveCategoryTestFixture>
 {
     [Fact(DisplayName = nameof(SaveCategory_WhenInputIsValid_PersistsCategory))]
     [Trait("Integration", "[UseCase] SaveCategory")]

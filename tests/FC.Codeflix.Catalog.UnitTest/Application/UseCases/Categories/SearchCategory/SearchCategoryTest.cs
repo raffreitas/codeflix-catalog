@@ -40,11 +40,11 @@ public class SearchCategoryTest(SearchCategoryTestFixture fixture)
         await repository
             .Received(1)
             .SearchAsync(Arg.Is<SearchInput>(search =>
-                  search.Page == input.Page &&
-                  search.PerPage == input.PerPage &&
-                  search.Search == input.Search &&
-                  search.Order == input.Order &&
-                  search.OrderBy == input.OrderBy),
+                    search.Page == input.Page &&
+                    search.PerPage == input.PerPage &&
+                    search.Search == input.Search &&
+                    search.Order == input.Order &&
+                    search.OrderBy == input.OrderBy),
                 Arg.Any<CancellationToken>());
     }
 }

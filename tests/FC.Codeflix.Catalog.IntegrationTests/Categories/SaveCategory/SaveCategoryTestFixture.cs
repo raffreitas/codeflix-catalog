@@ -2,16 +2,17 @@
 using FC.Codeflix.Catalog.IntegrationTests.Categories.Common;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Categories.SaveCategory;
+
 public class SaveCategoryTestFixture : CategoryTestFixture
 {
     public SaveCategoryInput GetValidInput()
-       => new(
-           Guid.NewGuid(),
-           GetValidCategoryName(),
-           GetValidCategoryDescription(),
-           DateTime.Now,
-           GetRandomBoolean()
-       );
+        => new(
+            Guid.NewGuid(),
+            GetValidCategoryName(),
+            GetValidCategoryDescription(),
+            DateTime.Now,
+            GetRandomBoolean()
+        );
 
     public SaveCategoryInput GetInvalidInput()
         => new(
@@ -21,11 +22,4 @@ public class SaveCategoryTestFixture : CategoryTestFixture
             DateTime.Now,
             GetRandomBoolean()
         );
-}
-
-
-[CollectionDefinition(nameof(SaveCategoryTestFixture))]
-public class SaveCategoryTestFixtureCollection
-    : ICollectionFixture<SaveCategoryTestFixture>
-{
 }

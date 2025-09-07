@@ -2,6 +2,7 @@
 using FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.Common;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.SaveCategory;
+
 public class SaveCategoryFixture
     : CategoryUseCaseFixture
 {

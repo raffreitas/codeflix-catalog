@@ -25,7 +25,7 @@ public class CategoryTestFixture : BaseFixture, IDisposable
                     .Keyword(t => t.Id)
                     .Text(t => t.Name, ps => ps
                         .Fields(x => x.Keyword(k => k.Name!.Suffix("keywork")))
-                     )
+                    )
                     .Text(t => t.Description)
                     .Boolean(b => b.IsActive)
                     .Date(d => d.CreatedAt)
@@ -65,7 +65,7 @@ public class CategoryTestFixture : BaseFixture, IDisposable
         var esClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
         esClient.DeleteByQuery<CategoryModel>(del => del
             .Query(q => q.QueryString(qs => qs.Query("*")))
-                .Conflicts(Conflicts.Proceed));
+            .Conflicts(Conflicts.Proceed));
     }
 
     public void Dispose()

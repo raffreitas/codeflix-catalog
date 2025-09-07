@@ -6,6 +6,7 @@ using FC.Codeflix.Catalog.Domain.Repositories.DTOs;
 using FC.Codeflix.Catalog.Infra.Data.ES.Models;
 
 namespace FC.Codeflix.Catalog.Infra.Data.ES.Repositories;
+
 public class CategoryRepository(ElasticsearchClient client) : ICategoryRepository
 {
     public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)

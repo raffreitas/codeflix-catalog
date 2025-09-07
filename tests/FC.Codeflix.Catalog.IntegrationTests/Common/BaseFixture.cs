@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Common;
+
 public abstract class BaseFixture
 {
     public IServiceProvider ServiceProvider { get; }
@@ -25,9 +26,9 @@ public abstract class BaseFixture
     {
         var services = new ServiceCollection();
 
-        var inMemorySettings = new Dictionary<string, string>()
+        var inMemorySettings = new Dictionary<string, string?>()
         {
-            {"ConnectionStrings:ElasticSearch","https://localhost:9200" }
+            { "ConnectionStrings:ElasticSearch", "https://localhost:9200" }
         };
 
         IConfiguration configuration = new ConfigurationBuilder()

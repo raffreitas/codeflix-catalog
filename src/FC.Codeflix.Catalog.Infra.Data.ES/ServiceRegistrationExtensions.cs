@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FC.Codeflix.Catalog.Infra.Data.ES;
+
 public static class ServiceRegistrationExtensions
 {
     public static IServiceCollection AddElasticSearch(
@@ -16,7 +17,7 @@ public static class ServiceRegistrationExtensions
     )
     {
         var connectionString = configuration.GetConnectionString("ElasticSearch")
-            ?? throw new InvalidOperationException("ElasticSearch Connection string not found.");
+                               ?? throw new InvalidOperationException("ElasticSearch Connection string not found.");
 
         var uri = new Uri(connectionString);
         var clientSettings = new ElasticsearchClientSettings(uri)
