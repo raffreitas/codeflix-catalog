@@ -2,13 +2,13 @@
 
 namespace FC.Codeflix.Catalog.Infra.Data.ES.Models;
 
-public sealed class CategoryModel
+public sealed record CategoryModel
 {
-    public Guid Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
-    public bool IsActive { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public Guid Id { get; init; }
+    public string? Name { get; init; }
+    public string? Description { get; init; }
+    public bool IsActive { get; init; }
+    public DateTime CreatedAt { get; init; }
 
     public static CategoryModel FromEntity(Category entity)
         => new()

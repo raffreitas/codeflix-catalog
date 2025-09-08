@@ -11,20 +11,20 @@ namespace FC.Codeflix.Catalog.IntegrationTests.Categories.Common;
 
 public class CategoryTestFixture : BaseFixture, IDisposable
 {
-    public CategoryTestFixture() : base()
+    public CategoryTestFixture()
     {
-        CreateCategoryIndex().GetAwaiter().GetResult();
+        CreateCategoryIndexAsync().GetAwaiter().GetResult();
     }
 
-    public async Task CreateCategoryIndex()
+    private async Task CreateCategoryIndexAsync()
     {
         var esClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
         await esClient.Indices.CreateAsync(ElasticsearchIndices.Category, c => c
             .Mappings<CategoryModel>(m => m
                 .Properties(ps => ps
                     .Keyword(t => t.Id)
-                    .Text(t => t.Name, ps => ps
-                        .Fields(x => x.Keyword(k => k.Name!.Suffix("keywork")))
+                    .Text(t => t.Name, descriptor => descriptor
+                        .Fields(x => x.Keyword(k => k.Name!.Suffix("keyword")))
                     )
                     .Text(t => t.Description)
                     .Boolean(b => b.IsActive)
@@ -59,6 +59,12 @@ public class CategoryTestFixture : BaseFixture, IDisposable
             GetValidCategoryDescription(),
             DateTime.Now,
             GetRandomBoolean());
+
+    public IList<CategoryModel> GetCategoryModelList(int length = 10)
+        => Enumerable.Range(0, length)
+            .Select(_ => CategoryModel.FromEntity(GetValidCategory()))
+            .ToList();
+
 
     public void DeleteAll()
     {

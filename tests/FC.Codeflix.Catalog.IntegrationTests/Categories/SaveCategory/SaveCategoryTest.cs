@@ -11,7 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FC.Codeflix.Catalog.IntegrationTests.Categories.SaveCategory;
 
-public sealed class SaveCategoryTest(SaveCategoryTestFixture fixture) : IClassFixture<SaveCategoryTestFixture>
+public sealed class SaveCategoryTest(SaveCategoryTestFixture fixture)
+    : IClassFixture<SaveCategoryTestFixture>, IDisposable
 {
     [Fact(DisplayName = nameof(SaveCategory_WhenInputIsValid_PersistsCategory))]
     [Trait("Integration", "[UseCase] SaveCategory")]
@@ -49,8 +50,8 @@ public sealed class SaveCategoryTest(SaveCategoryTestFixture fixture) : IClassFi
         var serviceProvider = fixture.ServiceProvider;
         var mediatr = serviceProvider.GetRequiredService<IMediator>();
         var elasticClient = serviceProvider.GetRequiredService<ElasticsearchClient>();
-        var input = fixture.GetValidInput();
-        var expectedMessage = "Name should not be null or empty.";
+        var input = fixture.GetInvalidInput();
+        const string expectedMessage = "Name should not be null or empty.";
 
         var action = async () => await mediatr.Send(input);
 
@@ -64,5 +65,8 @@ public sealed class SaveCategoryTest(SaveCategoryTestFixture fixture) : IClassFi
         persisted.Found.Should().BeFalse();
     }
 
-    public void Dispose() => fixture.DeleteAll();
+    public void Dispose()
+    {
+        fixture.DeleteAll();
+    }
 }
