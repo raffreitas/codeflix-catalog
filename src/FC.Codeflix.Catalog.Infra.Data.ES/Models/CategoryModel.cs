@@ -4,11 +4,11 @@ namespace FC.Codeflix.Catalog.Infra.Data.ES.Models;
 
 public sealed record CategoryModel
 {
-    public Guid Id { get; init; }
-    public string? Name { get; init; }
-    public string? Description { get; init; }
-    public bool IsActive { get; init; }
-    public DateTime CreatedAt { get; init; }
+    public Guid Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public bool IsActive { get; set; }
+    public DateTime CreatedAt { get; set; }
 
     public static CategoryModel FromEntity(Category entity)
         => new()
@@ -21,6 +21,6 @@ public sealed record CategoryModel
         };
 
 
-    public static Category ToEntity(CategoryModel model)
-        => new(model.Id, model.Name, model.Description, model.CreatedAt, model.IsActive);
+    public Category ToEntity()
+        => new(Id, Name, Description, CreatedAt, IsActive);
 }

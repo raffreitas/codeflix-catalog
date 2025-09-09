@@ -10,19 +10,13 @@ namespace FC.Codeflix.Catalog.IntegrationTests.Common;
 
 public abstract class BaseFixture
 {
-    public IServiceProvider ServiceProvider { get; }
+    public IServiceProvider ServiceProvider { get; } = BuildServiceProvider();
 
-    public Faker Faker { get; set; }
+    public Faker Faker { get; set; } = new(locale: "pt_BR");
 
-    protected BaseFixture()
-    {
-        Faker = new Faker(locale: "pt_BR");
-        ServiceProvider = BuildServiceProvider();
-    }
+    protected bool GetRandomBoolean() => Faker.Random.Bool();
 
-    public bool GetRandomBoolean() => Faker.Random.Bool();
-
-    private ServiceProvider BuildServiceProvider()
+    private static ServiceProvider BuildServiceProvider()
     {
         var services = new ServiceCollection();
 
