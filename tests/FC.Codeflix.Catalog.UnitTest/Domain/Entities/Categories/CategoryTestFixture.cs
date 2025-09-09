@@ -1,6 +1,4 @@
-﻿using Bogus;
-
-using FC.Codeflix.Catalog.Domain.Entities;
+﻿using FC.Codeflix.Catalog.Domain.Entities;
 using FC.Codeflix.Catalog.UnitTests.Common;
 
 namespace FC.Codeflix.Catalog.UnitTests.Domain.Entities.Categories;

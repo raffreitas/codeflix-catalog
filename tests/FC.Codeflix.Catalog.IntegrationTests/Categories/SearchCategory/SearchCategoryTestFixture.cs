@@ -1,6 +1,4 @@
-﻿using FC.Codeflix.Catalog.Application.UseCases.Categories.SearchCategory;
-using FC.Codeflix.Catalog.Domain.Entities;
-using FC.Codeflix.Catalog.Domain.Repositories.DTOs;
+﻿using FC.Codeflix.Catalog.Domain.Repositories.DTOs;
 using FC.Codeflix.Catalog.Infra.Data.ES.Models;
 using FC.Codeflix.Catalog.IntegrationTests.Categories.Common;
 
