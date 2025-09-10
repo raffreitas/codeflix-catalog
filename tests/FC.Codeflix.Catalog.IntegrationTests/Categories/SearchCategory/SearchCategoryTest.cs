@@ -35,7 +35,7 @@ public sealed class SearchCategoryTest(SearchCategoryTestFixture fixture)
     {
         var serviceProvider = fixture.ServiceProvider;
         var mediatr = serviceProvider.GetRequiredService<IMediator>();
-        var elasticClient = serviceProvider.GetRequiredService<ElasticsearchClient>();
+        var elasticClient = fixture.ElasticClient;
         string[] categoryNamesList =
         [
             "Action",
@@ -83,7 +83,7 @@ public sealed class SearchCategoryTest(SearchCategoryTestFixture fixture)
     {
         var serviceProvider = fixture.ServiceProvider;
         var mediatr = serviceProvider.GetRequiredService<IMediator>();
-        var elasticClient = serviceProvider.GetRequiredService<ElasticsearchClient>();
+        var elasticClient = fixture.ElasticClient;
         var examples = fixture.GetCategoryModelList();
         await elasticClient.IndexManyAsync(examples);
         await elasticClient.Indices.RefreshAsync(ElasticsearchIndices.Category);

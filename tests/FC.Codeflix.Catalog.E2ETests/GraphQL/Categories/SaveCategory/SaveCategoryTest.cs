@@ -1,6 +1,7 @@
 ﻿using Elastic.Clients.Elasticsearch;
 
 using FC.Codeflix.Catalog.Domain.Exceptions;
+using FC.Codeflix.Catalog.E2ETests.GraphQL.Categories.Common;
 using FC.Codeflix.Catalog.Infra.Data.ES.Models;
 
 using FluentAssertions;
@@ -9,21 +10,20 @@ using MediatR;
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FC.Codeflix.Catalog.IntegrationTests.Categories.SaveCategory;
+namespace FC.Codeflix.Catalog.E2ETests.GraphQL.Categories.SaveCategory;
 
+[Trait("E2E", "[Category] Save")]
 public sealed class SaveCategoryTest(SaveCategoryTestFixture fixture)
     : IClassFixture<SaveCategoryTestFixture>, IDisposable
 {
     [Fact(DisplayName = nameof(SaveCategory_WhenInputIsValid_PersistsCategory))]
-    [Trait("Integration", "[UseCase] SaveCategory")]
     public async Task SaveCategory_WhenInputIsValid_PersistsCategory()
     {
-        var serviceProvider = fixture.ServiceProvider;
-        var mediatr = serviceProvider.GetRequiredService<IMediator>();
         var elasticClient = fixture.ElasticClient;
         var input = fixture.GetValidInput();
 
-        var output = await mediatr.Send(input);
+        var output = await fixture.GraphQlClient.SaveCategory
+            .ExecuteAsync(input);
 
         var persisted = await elasticClient
             .GetAsync<CategoryModel>(input.Id);
@@ -34,32 +34,29 @@ public sealed class SaveCategoryTest(SaveCategoryTestFixture fixture)
         document.Name.Should().Be(input.Name);
         document.Description.Should().Be(input.Description);
         document.IsActive.Should().Be(input.IsActive);
-        document.CreatedAt.Should().Be(input.CreatedAt);
+        document.CreatedAt.Should().Be(input.CreatedAt.DateTime);
         output.Should().NotBeNull();
-        output.Id.Should().Be(input.Id);
-        output.Name.Should().Be(input.Name);
-        output.Description.Should().Be(input.Description);
-        output.IsActive.Should().Be(input.IsActive);
-        output.CreatedAt.Should().Be(input.CreatedAt);
+        output.Data?.SaveCategory.Should().NotBeNull();
+        output.Data?.SaveCategory.Id.Should().Be(input.Id);
+        output.Data?.SaveCategory.Name.Should().Be(input.Name);
+        output.Data?.SaveCategory.Description.Should().Be(input.Description);
+        output.Data?.SaveCategory.IsActive.Should().Be(input.IsActive);
+        output.Data?.SaveCategory.CreatedAt.Should().Be(input.CreatedAt);
     }
 
     [Fact(DisplayName = nameof(SaveCategory_WhenInputIsInvalid_ThrowsException))]
-    [Trait("Integration", "[UseCase] SaveCategory")]
     public async Task SaveCategory_WhenInputIsInvalid_ThrowsException()
     {
-        var serviceProvider = fixture.ServiceProvider;
-        var mediatr = serviceProvider.GetRequiredService<IMediator>();
         var elasticClient = fixture.ElasticClient;
         var input = fixture.GetInvalidInput();
         const string expectedMessage = "Name should not be null or empty.";
 
-        var action = async () => await mediatr.Send(input);
+        var output = await fixture.GraphQlClient.SaveCategory
+            .ExecuteAsync(input);
 
-        await action
-            .Should()
-            .ThrowAsync<EntityValidationException>()
-            .WithMessage(expectedMessage);
-
+        output.Data.Should().BeNull();
+        output.Errors.Should().NotBeEmpty();
+        output.Errors.Single().Message.Should().Be(expectedMessage);
         var persisted = await elasticClient
             .GetAsync<CategoryModel>(input.Id);
         persisted.Found.Should().BeFalse();

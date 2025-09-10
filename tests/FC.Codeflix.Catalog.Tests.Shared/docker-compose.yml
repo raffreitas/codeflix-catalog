@@ -1,0 +1,18 @@
+services:
+  elasticsearch.tests:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.1.2
+    container_name: elasticsearch.tests
+    restart: unless-stopped
+    volumes:
+      - ./.docker/es01:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+
+networks:
+  default:
+    name: catalog_api_tests

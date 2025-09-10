@@ -35,3 +35,10 @@ app.MapGraphQL();
 app.MapControllers();
 
 await app.RunAsync();
+
+public abstract partial class Program
+{
+    protected Program()
+    {
+    }
+}

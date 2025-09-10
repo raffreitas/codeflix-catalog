@@ -1,8 +1,8 @@
 ﻿using Bogus;
 
-namespace FC.Codeflix.Catalog.UnitTests.Common;
+namespace FC.Codeflix.Catalog.Tests.Shared;
 
-public abstract class BaseFixture
+public abstract class DataGeneratorBase
 {
     public Faker Faker { get; set; } = new(locale: "pt_BR");
 

@@ -21,7 +21,7 @@ public sealed class DeleteCategoryTest(CategoryTestFixture fixture) : IClassFixt
     {
         var serviceProvider = fixture.ServiceProvider;
         var mediatr = serviceProvider.GetRequiredService<IMediator>();
-        var elasticClient = serviceProvider.GetRequiredService<ElasticsearchClient>();
+        var elasticClient = fixture.ElasticClient;
         var categoriesExample = fixture.GetCategoryModelList();
         await elasticClient.IndexManyAsync(categoriesExample);
         var input = new DeleteCategoryInput(categoriesExample[3].Id);
@@ -37,7 +37,7 @@ public sealed class DeleteCategoryTest(CategoryTestFixture fixture) : IClassFixt
     {
         var serviceProvider = fixture.ServiceProvider;
         var mediatr = serviceProvider.GetRequiredService<IMediator>();
-        var elasticClient = serviceProvider.GetRequiredService<ElasticsearchClient>();
+        var elasticClient = fixture.ElasticClient;
         var categoriesExample = fixture.GetCategoryModelList();
         await elasticClient.IndexManyAsync(categoriesExample);
         var input = new DeleteCategoryInput(Guid.NewGuid());

@@ -10,11 +10,11 @@ public class SearchCategoryTestFixture : CategoryUseCaseFixture
     public SearchCategoryInput GetSearchInput()
     {
         return new SearchCategoryInput(
-           Page: Faker.Random.Int(1, 10),
-           PerPage: Faker.Random.Int(10, 20),
-           Search: Faker.Commerce.ProductName(),
-           OrderBy: Faker.Commerce.ProductName(),
-           Order: Faker.PickRandom(SearchOrder.Asc, SearchOrder.Desc)
+            Page: DataGenerator.Faker.Random.Int(1, 10),
+            PerPage: DataGenerator.Faker.Random.Int(10, 20),
+            Search: DataGenerator.Faker.Commerce.ProductName(),
+            OrderBy: DataGenerator.Faker.Commerce.ProductName(),
+            Order: DataGenerator.Faker.PickRandom(SearchOrder.Asc, SearchOrder.Desc)
         );
     }
 

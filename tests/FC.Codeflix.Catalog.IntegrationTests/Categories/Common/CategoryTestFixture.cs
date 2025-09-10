@@ -4,6 +4,7 @@ using FC.Codeflix.Catalog.Domain.Entities;
 using FC.Codeflix.Catalog.Infra.Data.ES;
 using FC.Codeflix.Catalog.Infra.Data.ES.Models;
 using FC.Codeflix.Catalog.IntegrationTests.Common;
+using FC.Codeflix.Catalog.Tests.Shared;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,54 +12,16 @@ namespace FC.Codeflix.Catalog.IntegrationTests.Categories.Common;
 
 public class CategoryTestFixture : BaseFixture, IDisposable
 {
+    public CategoryDataGenerator DataGenerator { get; } = new();
+    public readonly ElasticsearchClient ElasticClient;
+
     public CategoryTestFixture()
     {
-        CreateCategoryIndexAsync().GetAwaiter().GetResult();
+        ElasticClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
+        ElasticSearchOperations.CreateCategoryIndexAsync(ElasticClient).GetAwaiter().GetResult();
     }
 
-    private async Task CreateCategoryIndexAsync()
-    {
-        var esClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
-        await esClient.Indices.CreateAsync(ElasticsearchIndices.Category, c => c
-            .Mappings<CategoryModel>(m => m
-                .Properties(ps => ps
-                    .Keyword(t => t.Id)
-                    .Text(t => t.Name, descriptor => descriptor
-                        .Fields(x => x.Keyword(k => k.Name!.Suffix("keyword")))
-                    )
-                    .Text(t => t.Description)
-                    .Boolean(b => b.IsActive)
-                    .Date(d => d.CreatedAt)
-                )
-            )
-        );
-    }
-
-    public string GetValidCategoryName()
-    {
-        var categoryName = string.Empty;
-        while (categoryName.Length < 3)
-            categoryName = Faker.Commerce.Categories(1)[0];
-        if (categoryName.Length > 255)
-            categoryName = categoryName[..255];
-        return categoryName;
-    }
-
-    public string GetValidCategoryDescription()
-    {
-        var categoryDescription = Faker.Commerce.ProductDescription();
-        if (categoryDescription.Length > 10_000)
-            categoryDescription = categoryDescription[..10_000];
-        return categoryDescription;
-    }
-
-    public Category GetValidCategory()
-        => new(
-            Guid.NewGuid(),
-            GetValidCategoryName(),
-            GetValidCategoryDescription(),
-            DateTime.Now,
-            GetRandomBoolean());
+    public Category GetValidCategory() => DataGenerator.GetValidCategory();
 
     public IList<CategoryModel> GetCategoryModelList(int length = 10)
     {
@@ -81,16 +44,12 @@ public class CategoryTestFixture : BaseFixture, IDisposable
 
     public void DeleteAll()
     {
-        var esClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
-        esClient.DeleteByQuery<CategoryModel>(del => del
-            .Query(q => q.QueryString(qs => qs.Query("*")))
-            .Conflicts(Conflicts.Proceed));
+        ElasticSearchOperations.DeleteCategoryDocuments(ElasticClient);
     }
 
     public void Dispose()
     {
-        var esClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
-        esClient.Indices.Delete(ElasticsearchIndices.Category);
+        ElasticSearchOperations.DeleteCategoryIndex(ElasticClient);
     }
 }
 

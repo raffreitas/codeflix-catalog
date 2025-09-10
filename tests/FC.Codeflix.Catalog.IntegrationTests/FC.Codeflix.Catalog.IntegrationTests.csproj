@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="35.6.3" />
     <PackageReference Include="coverlet.collector" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,11 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FC.Codeflix.Catalog.Application\FC.Codeflix.Catalog.Application.csproj" />
-    <ProjectReference Include="..\..\src\FC.Codeflix.Catalog.Infra.Data.ES\FC.Codeflix.Catalog.Infra.Data.ES.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
@@ -37,6 +31,10 @@
     <None Update="xunit.runner.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FC.Codeflix.Catalog.Tests.Shared\FC.Codeflix.Catalog.Tests.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,27 +1,19 @@
 ﻿using FC.Codeflix.Catalog.Domain.Entities;
 using FC.Codeflix.Catalog.Domain.Repositories;
-using FC.Codeflix.Catalog.UnitTests.Common;
+using FC.Codeflix.Catalog.Tests.Shared;
 
 using NSubstitute;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.Common;
 
-public class CategoryUseCaseFixture : BaseFixture
+public class CategoryUseCaseFixture
 {
+    public CategoryDataGenerator DataGenerator { get; } = new();
+
     public ICategoryRepository GetMockRepository()
         => Substitute.For<ICategoryRepository>();
 
-    public string GetValidName() => Faker.Commerce.Categories(1)[0];
-    public string GetValidDescription() => Faker.Commerce.ProductDescription();
-
-    public Category GetValidCategory()
-        => new(
-            id: Guid.NewGuid(),
-            name: GetValidName(),
-            description: GetValidDescription(),
-            createdAt: DateTime.Now,
-            isActive: GetRandomBoolean()
-        );
+    public Category GetValidCategory() => DataGenerator.GetValidCategory();
 }
 
 [CollectionDefinition(nameof(CategoryUseCaseFixture))]

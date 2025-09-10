@@ -3,25 +3,24 @@ using FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.Common;
 
 namespace FC.Codeflix.Catalog.UnitTests.Application.UseCases.Categories.SaveCategory;
 
-public class SaveCategoryFixture
-    : CategoryUseCaseFixture
+public class SaveCategoryFixture : CategoryUseCaseFixture
 {
     public SaveCategoryInput GetValidInput()
         => new(
             Guid.NewGuid(),
-            GetValidName(),
-            GetValidDescription(),
+            DataGenerator.GetValidCategoryName(),
+            DataGenerator.GetValidCategoryDescription(),
             DateTime.Now,
-            GetRandomBoolean()
+            DataGenerator.GetRandomBoolean()
         );
 
     public SaveCategoryInput GetInvalidInput()
         => new(
             Guid.NewGuid(),
             null!,
-            GetValidDescription(),
+            DataGenerator.GetValidCategoryName(),
             DateTime.Now,
-            GetRandomBoolean()
+            DataGenerator.GetRandomBoolean()
         );
 }
 

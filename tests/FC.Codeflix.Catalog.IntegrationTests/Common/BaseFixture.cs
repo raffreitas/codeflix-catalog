@@ -12,10 +12,6 @@ public abstract class BaseFixture
 {
     public IServiceProvider ServiceProvider { get; } = BuildServiceProvider();
 
-    public Faker Faker { get; set; } = new(locale: "pt_BR");
-
-    protected bool GetRandomBoolean() => Faker.Random.Bool();
-
     private static ServiceProvider BuildServiceProvider()
     {
         var services = new ServiceCollection();
