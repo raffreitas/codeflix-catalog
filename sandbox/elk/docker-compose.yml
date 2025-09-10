@@ -4,7 +4,7 @@ services:
     container_name: elk_es
     restart: unless-stopped
     volumes:
-      - ./.docker/es01:/usr/share/elasticsearch/data
+      - elasticsearch_data:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
@@ -27,3 +27,6 @@ services:
 networks:
   default:
     name: catalog_api
+
+volumes:
+  elasticsearch_data:

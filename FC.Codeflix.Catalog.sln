@@ -13,11 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Codeflix.Catalog.UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Codeflix.Catalog.Application", "src\FC.Codeflix.Catalog.Application\FC.Codeflix.Catalog.Application.csproj", "{D4BACF1A-10CF-4A45-AC88-1B1879BDB003}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
-	ProjectSection(SolutionItems) = preProject
-		docker-compose.yml = docker-compose.yml
-		category_index.json = category_index.json
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sandbox", "sandbox", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Codeflix.Catalog.Infra.Data.ES", "src\FC.Codeflix.Catalog.Infra.Data.ES\FC.Codeflix.Catalog.Infra.Data.ES.csproj", "{46F3E0A6-6202-44F3-85DF-EC366A6AED09}"
 EndProject
@@ -28,6 +24,17 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Codeflix.Catalog.E2ETests", "tests\FC.Codeflix.Catalog.E2ETests\FC.Codeflix.Catalog.E2ETests.csproj", "{30E7CD82-C803-4184-AA96-158DB194AA68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Codeflix.Catalog.Tests.Shared", "tests\FC.Codeflix.Catalog.Tests.Shared\FC.Codeflix.Catalog.Tests.Shared.csproj", "{3B4566D0-7C47-4F2B-BD65-F061C1D41BD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "elk", "elk", "{833F9C60-BA96-4C87-91BD-12A4D31E8313}"
+	ProjectSection(SolutionItems) = preProject
+		sandbox\elk\category_index.json = sandbox\elk\category_index.json
+		sandbox\elk\docker-compose.yml = sandbox\elk\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kafka", "kafka", "{8625B388-7C61-440A-B2CD-B32B1EF25E27}"
+	ProjectSection(SolutionItems) = preProject
+		sandbox\kafka\docker-compose.yml = sandbox\kafka\docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +87,8 @@ Global
 		{7B72BE9A-3531-4D5E-BC89-961EC7020A5E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{30E7CD82-C803-4184-AA96-158DB194AA68} = {D2BCB545-0FB1-44B6-84AE-FC9373691DF8}
 		{3B4566D0-7C47-4F2B-BD65-F061C1D41BD9} = {D2BCB545-0FB1-44B6-84AE-FC9373691DF8}
+		{833F9C60-BA96-4C87-91BD-12A4D31E8313} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
+		{8625B388-7C61-440A-B2CD-B32B1EF25E27} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8498DE8-0BC4-4637-A3DE-7436BBBFC8B1}

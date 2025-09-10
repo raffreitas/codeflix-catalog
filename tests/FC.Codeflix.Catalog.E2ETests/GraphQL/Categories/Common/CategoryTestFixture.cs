@@ -1,7 +1,6 @@
 ﻿using Elastic.Clients.Elasticsearch;
 
 using FC.Codeflix.Catalog.E2ETests.Base;
-using FC.Codeflix.Catalog.Infra.Data.ES;
 using FC.Codeflix.Catalog.Infra.Data.ES.Models;
 using FC.Codeflix.Catalog.Tests.Shared;
 
