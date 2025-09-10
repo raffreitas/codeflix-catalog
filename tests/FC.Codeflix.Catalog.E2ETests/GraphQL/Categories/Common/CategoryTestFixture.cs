@@ -29,6 +29,9 @@ public class CategoryTestFixture : IDisposable
         ElasticSearchOperations.CreateCategoryIndexAsync(ElasticClient).GetAwaiter().GetResult();
     }
 
+    public IList<CategoryModel> GetCategoryModelList(int count = 10)
+        => DataGenerator.GetCategoryModelList(count);
+
     public void DeleteAll()
     {
         ElasticSearchOperations.DeleteCategoryDocuments(ElasticClient);
