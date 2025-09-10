@@ -22,7 +22,7 @@ public class CategoryTestFixture : IDisposable
         WebApplicationFactory = new CustomWebApplicationFactory<Program>();
         _ = WebApplicationFactory.CreateClient(new WebApplicationFactoryClientOptions
         {
-            BaseAddress = new Uri(WebApplicationFactory.BaseUrl)
+            BaseAddress = new Uri(CustomWebApplicationFactory<Program>.BaseUrl)
         });
         ElasticClient = WebApplicationFactory.Services.GetRequiredService<ElasticsearchClient>();
         GraphQlClient = WebApplicationFactory.Services.GetRequiredService<CatalogClient>();

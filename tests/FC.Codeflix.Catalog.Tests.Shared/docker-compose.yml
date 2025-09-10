@@ -4,7 +4,7 @@ services:
     container_name: elasticsearch.tests
     restart: unless-stopped
     volumes:
-      - ./.docker/es01:/usr/share/elasticsearch/data
+      - elasticsearch_data:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
@@ -12,6 +12,9 @@ services:
     ports:
       - "9201:9200"
       - "9301:9300"
+
+volumes:
+  elasticsearch_data:
 
 networks:
   default:

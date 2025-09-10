@@ -6,7 +6,7 @@ namespace FC.Codeflix.Catalog.E2ETests.Base;
 
 public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStartup> where TStartup : class
 {
-    public readonly string BaseUrl = "http://localhost:61001/";
+    public const string BaseUrl = "http://localhost:61001/";
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -15,14 +15,12 @@ public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<TStar
         builder.UseEnvironment(environment);
         builder.ConfigureServices(services =>
         {
-            services.AddTransient<TestServerHttpMessageHandlerBuilder>(sp =>
-                new TestServerHttpMessageHandlerBuilder(Server));
+            services.AddCatalogClient();
 
-            services.AddCatalogClient()
-                .ConfigureHttpClient(client =>
-                {
-                    client.BaseAddress = new Uri("http://localhost/graphql");
-                });
+            services.AddHttpClient("CatalogClient", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost/graphql");
+            }).ConfigurePrimaryHttpMessageHandler(() => Server.CreateHandler());
         });
 
         base.ConfigureWebHost(builder);

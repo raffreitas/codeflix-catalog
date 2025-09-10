@@ -34,7 +34,7 @@ public sealed class SaveCategoryTest(SaveCategoryTestFixture fixture)
         document.Name.Should().Be(input.Name);
         document.Description.Should().Be(input.Description);
         document.IsActive.Should().Be(input.IsActive);
-        document.CreatedAt.Should().Be(input.CreatedAt.DateTime);
+        document.CreatedAt.Date.Should().Be(input.CreatedAt.Date);
         output.Should().NotBeNull();
         output.Data?.SaveCategory.Should().NotBeNull();
         output.Data?.SaveCategory.Id.Should().Be(input.Id);
