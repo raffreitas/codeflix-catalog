@@ -1,0 +1,68 @@
+﻿### POST Create connector
+POST http://localhost:8083/connectors
+Content-Type: application/json
+
+{
+  "name": "catalog-admin",
+  "config": {
+    "name": "catalog-admin",
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "tasks.max": "1",
+    "database.hostname": "fc.codeflix.catalog.db",
+    "database.port": "3306",
+    "database.user": "root",
+    "database.password": "root",
+    "database.server.id": "184054",
+    "topic.prefix": "catalogadmin",
+    "database.include.list": "catalog",
+    "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+    "schema.history.internal.kafka.topic": "schema-changes.catalog",
+    "snapshot.mode": "when_needed",
+    "tombstones.on.delete": false
+  }
+}
+
+### PUT Update connector
+PUT http://localhost:8083/connectors
+Content-Type: application/json
+
+{
+  "name": "catalog-admin",
+  "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+  "tasks.max": "1",
+  "database.hostname": "fc.codeflix.catalog.db",
+  "database.port": "3306",
+  "database.user": "root",
+  "database.password": "root",
+  "database.server.id": "184054",
+  "topic.prefix": "catalogadmin",
+  "database.include.list": "catalog",
+  "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+  "schema.history.internal.kafka.topic": "schema-changes.catalog",
+  "snapshot.mode": "when_needed",
+  "tombstones.on.delete": false
+}
+
+### DELETE Delete connector
+DELETE http://localhost:8083/connectors/catalog-admin
+
+### PUT Validate Config
+PUT http://localhost:8083/connector-plugins/MySqlConnector/config/validate
+Content-Type: application/json
+
+{
+  "name": "catalog-admin",
+  "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+  "tasks.max": "1",
+  "database.hostname": "fc.codeflix.catalog.db",
+  "database.port": "3306",
+  "database.user": "root",
+  "database.password": "root",
+  "database.server.id": "184054",
+  "topic.prefix": "catalogadmin",
+  "database.include.list": "catalog",
+  "schema.history.internal.kafka.bootstrap.servers": "kafka:29092",
+  "schema.history.internal.kafka.topic": "schema-changes.catalog",
+  "snapshot.mode": "when_needed",
+  "tombstones.on.delete": false
+}

@@ -34,7 +34,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kafka", "kafka", "{8625B388-7C61-440A-B2CD-B32B1EF25E27}"
 	ProjectSection(SolutionItems) = preProject
 		sandbox\kafka\docker-compose.yml = sandbox\kafka\docker-compose.yml
+		sandbox\kafka\kafka-connect.http = sandbox\kafka\kafka-connect.http
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FC.Codeflix.Catalog.Infra.Messaging", "src\FC.Codeflix.Catalog.Infra.Messaging\FC.Codeflix.Catalog.Infra.Messaging.csproj", "{73EE99A2-D8F2-4410-A149-1425A86C99D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +77,10 @@ Global
 		{3B4566D0-7C47-4F2B-BD65-F061C1D41BD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B4566D0-7C47-4F2B-BD65-F061C1D41BD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B4566D0-7C47-4F2B-BD65-F061C1D41BD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EE99A2-D8F2-4410-A149-1425A86C99D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EE99A2-D8F2-4410-A149-1425A86C99D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EE99A2-D8F2-4410-A149-1425A86C99D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EE99A2-D8F2-4410-A149-1425A86C99D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +96,7 @@ Global
 		{3B4566D0-7C47-4F2B-BD65-F061C1D41BD9} = {D2BCB545-0FB1-44B6-84AE-FC9373691DF8}
 		{833F9C60-BA96-4C87-91BD-12A4D31E8313} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
 		{8625B388-7C61-440A-B2CD-B32B1EF25E27} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
+		{73EE99A2-D8F2-4410-A149-1425A86C99D9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B8498DE8-0BC4-4637-A3DE-7436BBBFC8B1}
