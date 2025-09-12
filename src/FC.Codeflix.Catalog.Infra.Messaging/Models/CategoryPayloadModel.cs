@@ -5,12 +5,12 @@ namespace FC.Codeflix.Catalog.Infra.Messaging.Models;
 
 public sealed record CategoryPayloadModel
 {
-    public required Guid Id { get; init; }
-    public required string Name { get; init; }
-    public required string? Description { get; init; }
-    public required DateTime CreatedAt { get; init; }
-    public required bool IsActive { get; init; }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string? Description { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public bool IsActive { get; set; }
 
     public SaveCategoryInput ToSaveCategory() => new(Id, Name, Description, CreatedAt, IsActive);
-    public DeleteCategoryInput ToDeleteCategory => new(Id);
+    public DeleteCategoryInput ToDeleteCategory() => new(Id);
 };

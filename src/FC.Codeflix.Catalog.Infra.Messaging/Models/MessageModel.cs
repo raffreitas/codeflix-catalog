@@ -2,14 +2,14 @@
 
 public sealed class MessageModel<T> where T : class
 {
-    public required MessageModelPayload<T> Payload { get; init; }
+    public MessageModelPayload<T> Payload { get; init; }
 }
 
 public sealed record MessageModelPayload<T> where T : class
 {
-    public T? Before { get; set; }
-    public T? After { get; set; }
-    public required string Op { get; set; }
+    public T Before { get; set; }
+    public T After { get; set; }
+    public string Op { get; set; }
 
     public MessageModelOperation? Operation => Op switch
     {

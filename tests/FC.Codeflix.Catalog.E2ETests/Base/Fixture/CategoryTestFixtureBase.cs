@@ -12,7 +12,7 @@ public class CategoryTestFixtureBase : IDisposable
 {
     protected CustomWebApplicationFactory<Program> WebApplicationFactory { get; }
     public ElasticsearchClient ElasticClient { get; }
-    protected CategoryDataGenerator DataGenerator { get; } = new();
+    public CategoryDataGenerator DataGenerator { get; } = new();
 
     protected CategoryTestFixtureBase()
     {
