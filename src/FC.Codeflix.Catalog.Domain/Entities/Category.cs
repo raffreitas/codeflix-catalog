@@ -6,9 +6,15 @@ public sealed class Category
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
-    public string Description { get; private set; }
+    public string? Description { get; private set; }
     public bool IsActive { get; private set; }
     public DateTime CreatedAt { get; private set; }
+
+
+    public Category(Guid id, string? name)
+        : this(id, name, null, DateTime.Now)
+    {
+    }
 
     public Category(
         Guid id,
@@ -30,6 +36,5 @@ public sealed class Category
     {
         DomainValidation.NotNullOrEmpty(Id, fieldName: nameof(Id));
         DomainValidation.NotNullOrEmpty(Name, fieldName: nameof(Name));
-        DomainValidation.NotNull(Description, fieldName: nameof(Description));
     }
 }

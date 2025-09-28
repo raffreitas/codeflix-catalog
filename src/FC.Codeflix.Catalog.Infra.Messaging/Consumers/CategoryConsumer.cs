@@ -59,33 +59,32 @@ public sealed class CategoryConsumer(
         using var scope = serviceScopeFactory.CreateScope();
         var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-        var messageModel =
-            JsonSerializer.Deserialize<MessageModel<CategoryPayloadModel>>(
-                message.Value, SerializerConfiguration.JsonSerializerOptions);
+        var messageModel = JsonSerializer.Deserialize<MessageModelPayload<CategoryPayloadModel>>(
+            message.Value, SerializerConfiguration.JsonSerializerOptions);
 
-        switch (messageModel!.Payload.Operation)
+        switch (messageModel!.Operation)
         {
             case MessageModelOperation.Create:
             case MessageModelOperation.Read:
             case MessageModelOperation.Update:
-                var saveInput = messageModel.Payload.After!.ToSaveCategory();
+                var saveInput = messageModel.After!.ToSaveCategory();
                 await mediator.Send(saveInput, cancellationToken);
                 break;
             case MessageModelOperation.Delete:
                 try
                 {
-                    var deleteInput = messageModel.Payload.Before!.ToDeleteCategory();
+                    var deleteInput = messageModel.Before!.ToDeleteCategory();
                     await mediator.Send(deleteInput, cancellationToken);
                 }
                 catch (NotFoundException ex)
                 {
                     logger.LogError(ex, "Category with Id: {CategoryId} was not found. Message: {Message}",
-                        messageModel.Payload.Before!.Id, message.Value);
+                        messageModel.Before!.Id, message.Value);
                 }
 
                 break;
             default:
-                logger.LogError("Invalid Operation: {Operation}", messageModel.Payload.Op);
+                logger.LogError("Invalid Operation: {Operation}", messageModel.Op);
                 break;
         }
     }
