@@ -1,4 +1,6 @@
-﻿namespace FC.Codeflix.Catalog.Infra.Data.ES.Models;
+﻿using FC.Codeflix.Catalog.Domain.Entities;
+
+namespace FC.Codeflix.Catalog.Infra.Data.ES.Models;
 
 public sealed record GenreModel
 {
@@ -18,6 +20,14 @@ public sealed record GenreModel
         Categories = entity.Categories.Select(category => new GenreCategoryModel(category.Id, category.Name))
             .ToList()
     };
+
+    public Genre ToEntity() => new(
+        id: Id,
+        name: Name,
+        isActive: IsActive,
+        createdAt: CreatedAt,
+        categories: Categories.Select(c => new Category(c.Id, c.Name)).ToList()
+    );
 }
 
 public sealed record GenreCategoryModel(Guid Id, string Name);

@@ -23,8 +23,43 @@ public sealed class GenreRepository(ElasticsearchClient client) : IGenreReposito
             throw new NotFoundException($"Genre '{id}' not found.");
     }
 
-    public Task<SearchOutput<Genre>> SearchAsync(SearchInput input, CancellationToken cancellationToken = default)
+    public async Task<SearchOutput<Genre>> SearchAsync(SearchInput input, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var response = await client.SearchAsync<GenreModel>(s => s
+                .Query(q =>
+                {
+                    if (string.IsNullOrWhiteSpace(input.Search))
+                        q.MatchAll();
+                    else
+                        q.Match(m => m
+                            .Field(f => f.Name)
+                            .Query(input.Search)
+                        );
+                })
+                .From(input.From)
+                .Size(input.PerPage)
+                .Sort(BuildSortExpression(input.OrderBy, input.Order))
+            , cancellationToken);
+
+        var genres = response.Documents
+            .Select(doc => doc.ToEntity())
+            .ToList();
+
+        return new SearchOutput<Genre>(input.Page, input.PerPage, (int)response.Total, genres);
     }
+
+    private static Action<SortOptionsDescriptor<GenreModel>> BuildSortExpression(string orderBy, SearchOrder order)
+        => (orderBy.ToLower(), order) switch
+        {
+            ("name", SearchOrder.Asc) => s =>
+                s.Field(f => f.Name.Suffix("keyword"), SortOrder.Asc)
+                    .Field(f => f.Id, SortOrder.Asc),
+            ("name", SearchOrder.Desc) => s =>
+                s.Field(f => f.Name.Suffix("keyword"), SortOrder.Desc).Field(f => f.Id, SortOrder.Desc),
+            ("id", SearchOrder.Asc) => s => s.Field(f => f.Id, SortOrder.Asc),
+            ("id", SearchOrder.Desc) => s => s.Field(f => f.Id, SortOrder.Desc),
+            ("createdat", SearchOrder.Asc) => s => s.Field(f => f.CreatedAt, SortOrder.Asc),
+            ("createdat", SearchOrder.Desc) => s => s.Field(f => f.CreatedAt, SortOrder.Desc),
+            _ => s => s.Field(f => f.Name.Suffix("keyword"), SortOrder.Asc).Field(f => f.Id, SortOrder.Asc)
+        };
 }

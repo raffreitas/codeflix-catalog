@@ -21,10 +21,8 @@ public class GenreTestFixture : BaseFixture, IDisposable
     }
 
     public Genre GetValidGenre() => DataGenerator.GetValidGenre();
-    //
-    // public IList<GenreModel> GetGenreModelList(int length = 10)
-    //     => DataGenerator.GetGenreModelList(length);
 
+    public IList<GenreModel> GetGenreModelList(int length = 10) => DataGenerator.GetGenreModelList(length).ToList();
 
     public void DeleteAll() => ElasticClient.DeleteDocuments<GenreModel>();
 
