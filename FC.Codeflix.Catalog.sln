@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "elk", "elk", "{833F9C60-BA9
 	ProjectSection(SolutionItems) = preProject
 		sandbox\elk\category_index.json = sandbox\elk\category_index.json
 		sandbox\elk\docker-compose.yml = sandbox\elk\docker-compose.yml
+		sandbox\elk\genre_index.json = sandbox\elk\genre_index.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kafka", "kafka", "{8625B388-7C61-440A-B2CD-B32B1EF25E27}"

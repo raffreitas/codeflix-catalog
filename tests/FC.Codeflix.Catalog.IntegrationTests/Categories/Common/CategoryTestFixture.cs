@@ -17,7 +17,7 @@ public class CategoryTestFixture : BaseFixture, IDisposable
     public CategoryTestFixture()
     {
         ElasticClient = ServiceProvider.GetRequiredService<ElasticsearchClient>();
-        ElasticSearchOperations.CreateCategoryIndexAsync(ElasticClient).GetAwaiter().GetResult();
+        ElasticClient.CreateCategoryIndexAsync().GetAwaiter().GetResult();
     }
 
     public Category GetValidCategory() => DataGenerator.GetValidCategory();
@@ -28,12 +28,12 @@ public class CategoryTestFixture : BaseFixture, IDisposable
 
     public void DeleteAll()
     {
-        ElasticSearchOperations.DeleteCategoryDocuments(ElasticClient);
+        ElasticClient.DeleteDocuments<CategoryModel>();
     }
 
     public void Dispose()
     {
-        ElasticSearchOperations.DeleteCategoryIndex(ElasticClient);
+        ElasticClient.DeleteCategoryIndex();
     }
 }
 

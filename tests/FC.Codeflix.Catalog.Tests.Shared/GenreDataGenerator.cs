@@ -1,4 +1,5 @@
-﻿using FC.Codeflix.Catalog.Domain.Entities;
+﻿using FC.Codeflix.Catalog.Application.UseCases.Genres.SaveGenre;
+using FC.Codeflix.Catalog.Domain.Entities;
 
 namespace FC.Codeflix.Catalog.Tests.Shared;
 
@@ -19,5 +20,29 @@ public sealed class GenreDataGenerator : DataGeneratorBase
         );
 
         return genre;
+    }
+
+    public SaveGenreInput GetValidSaveGenreInput()
+    {
+        var genre = GetValidGenre();
+        return new SaveGenreInput(
+            genre.Id,
+            genre.Name,
+            genre.IsActive,
+            genre.CreatedAt,
+            genre.Categories.Select(item => new SaveGenreInputCategory(item.Id, item.Name))
+        );
+    }
+
+    public SaveGenreInput GetInvalidSaveGenreInput()
+    {
+        var genre = GetValidGenre();
+        return new SaveGenreInput(
+            genre.Id,
+            null!,
+            genre.IsActive,
+            genre.CreatedAt,
+            genre.Categories.Select(item => new SaveGenreInputCategory(item.Id, item.Name))
+        );
     }
 }

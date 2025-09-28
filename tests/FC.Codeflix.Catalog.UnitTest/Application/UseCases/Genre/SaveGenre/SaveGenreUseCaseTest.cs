@@ -42,7 +42,7 @@ public sealed class SaveGenreUseCaseTest : IClassFixture<SaveGenreUseCaseTestFix
     public async Task SaveInvalidGenre()
     {
         var repository = _fixture.GetMockRepository();
-        var input = _fixture.GetInalidInput();
+        var input = _fixture.GetInvalidInput();
         var useCase = new SaveGenreUseCase(repository);
 
         var action = async () => await useCase.Handle(input, CancellationToken.None);

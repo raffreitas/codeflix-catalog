@@ -43,7 +43,7 @@ public sealed class CategoryConsumerTest(CategoryConsumerTestFixture fixture)
         await fixture.PublishMessageAsync(message);
         await Task.Delay(2_000);
 
-        var persisted = await fixture.ElasticClient.GetAsync<CategoryModel>(category!.Id);
+        var persisted = await fixture.ElasticClient.GetAsync<CategoryModel>(category.Id);
         persisted.Found.Should().BeTrue();
         var document = persisted.Source;
         document.Should().NotBeNull();

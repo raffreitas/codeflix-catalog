@@ -22,13 +22,12 @@ public class CategoryTestFixtureBase : IDisposable
             BaseAddress = new Uri(CustomWebApplicationFactory<Program>.BaseUrl)
         });
         ElasticClient = WebApplicationFactory.Services.GetRequiredService<ElasticsearchClient>();
-        ElasticSearchOperations.CreateCategoryIndexAsync(ElasticClient).GetAwaiter().GetResult();
+        ElasticClient.CreateCategoryIndexAsync().GetAwaiter().GetResult();
     }
 
     public IList<CategoryModel> GetCategoryModelList(int count = 10) => DataGenerator.GetCategoryModelList(count);
 
-    public void DeleteAll() => ElasticSearchOperations.DeleteCategoryDocuments(ElasticClient);
-
-
-    public void Dispose() => ElasticSearchOperations.DeleteCategoryIndex(ElasticClient);
+    public void DeleteAll() => ElasticClient.DeleteDocuments<CategoryModel>();
+    
+    public void Dispose() => ElasticClient.DeleteCategoryIndex();
 }
