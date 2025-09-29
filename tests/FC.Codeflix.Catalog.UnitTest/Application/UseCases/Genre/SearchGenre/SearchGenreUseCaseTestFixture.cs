@@ -17,7 +17,4 @@ public sealed class SearchGenreUseCaseTestFixture : GenreUseCaseTestFixture
             Order: random.Next(0, 1) == 0 ? SearchOrder.Asc : SearchOrder.Desc
         );
     }
-
-    public List<Catalog.Domain.Entities.Genre> GetGenreList(int length = 10)
-        => Enumerable.Range(0, length).Select(_ => GetValidGenre()).ToList();
 }

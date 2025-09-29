@@ -8,13 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FC.Codeflix.Catalog.E2ETests.Base.Fixture;
 
-public class CategoryTestFixtureBase : IDisposable
+public class GenreTestFixtureBase : IDisposable
 {
     protected CustomWebApplicationFactory<Program> WebApplicationFactory { get; }
     public ElasticsearchClient ElasticClient { get; }
-    public CategoryDataGenerator DataGenerator { get; } = new();
+    public GenreDataGenerator DataGenerator { get; } = new();
 
-    protected CategoryTestFixtureBase()
+    protected GenreTestFixtureBase()
     {
         WebApplicationFactory = new CustomWebApplicationFactory<Program>();
         _ = WebApplicationFactory.CreateClient(new WebApplicationFactoryClientOptions
@@ -22,12 +22,12 @@ public class CategoryTestFixtureBase : IDisposable
             BaseAddress = new Uri(CustomWebApplicationFactory<Program>.BaseUrl)
         });
         ElasticClient = WebApplicationFactory.Services.GetRequiredService<ElasticsearchClient>();
-        ElasticClient.CreateCategoryIndexAsync().GetAwaiter().GetResult();
+        ElasticClient.CreateGenreIndexAsync().GetAwaiter().GetResult();
     }
 
-    public IList<CategoryModel> GetCategoryModelList(int count = 10) => DataGenerator.GetCategoryModelList(count);
+    public List<GenreModel> GetGenreModelList(int count = 10) => DataGenerator.GetGenreModelList(count).ToList();
 
-    public void DeleteAll() => ElasticClient.DeleteDocuments<CategoryModel>();
+    public void DeleteAll() => ElasticClient.DeleteDocuments<GenreModel>();
 
-    public void Dispose() => ElasticClient.DeleteCategoryIndex();
+    public void Dispose() => ElasticClient.DeleteGenreIndex();
 }

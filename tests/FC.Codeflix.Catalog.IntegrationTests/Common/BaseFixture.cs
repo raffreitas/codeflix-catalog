@@ -16,7 +16,7 @@ public abstract class BaseFixture
 
         var inMemorySettings = new Dictionary<string, string?>()
         {
-            { "ConnectionStrings:ElasticSearch", "http://localhost:9200" }
+            { "ConnectionStrings:ElasticSearch", "http://localhost:9201" }
         };
 
         IConfiguration configuration = new ConfigurationBuilder()

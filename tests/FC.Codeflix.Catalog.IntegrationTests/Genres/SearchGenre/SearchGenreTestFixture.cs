@@ -7,13 +7,7 @@ namespace FC.Codeflix.Catalog.IntegrationTests.Genres.SearchGenre;
 public sealed class SearchGenreTestFixture : GenreTestFixture
 {
     public IList<GenreModel> GetGenreModelList(IEnumerable<string> genreNames)
-        => genreNames.Select(name =>
-        {
-            Task.Delay(5).GetAwaiter().GetResult();
-            var genre = GenreModel.FromEntity(GetValidGenre());
-            genre.Name = name;
-            return genre;
-        }).ToList();
+        => DataGenerator.GetGenreModelList(genreNames);
 
     public IList<GenreModel> CloneGenresListOrdered(IList<GenreModel> genresList, string orderBy, SearchOrder direction)
     {

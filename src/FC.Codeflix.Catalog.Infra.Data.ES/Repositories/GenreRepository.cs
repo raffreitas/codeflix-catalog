@@ -1,4 +1,5 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 
 using FC.Codeflix.Catalog.Domain.Entities;
 using FC.Codeflix.Catalog.Domain.Exceptions;
@@ -46,6 +47,21 @@ public sealed class GenreRepository(ElasticsearchClient client) : IGenreReposito
             .ToList();
 
         return new SearchOutput<Genre>(input.Page, input.PerPage, (int)response.Total, genres);
+    }
+
+    public async Task<IReadOnlyList<Genre>> GetByIdsAsync(IEnumerable<Guid> ids,
+        CancellationToken cancellationToken = default)
+    {
+        var response = await client.SearchAsync<GenreModel>(s => s
+            .Query(q => q
+                .Bool(b => b
+                    .Filter(f => f
+                        .Ids(i => i.Values(ids.Select(id => id.ToString()).ToArray()))
+                    )
+                )
+            ), cancellationToken);
+
+        return response.Documents.Select(doc => doc.ToEntity()).ToList();
     }
 
     private static Action<SortOptionsDescriptor<GenreModel>> BuildSortExpression(string orderBy, SearchOrder order)
