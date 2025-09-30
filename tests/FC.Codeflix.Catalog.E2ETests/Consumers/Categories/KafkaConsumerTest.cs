@@ -7,11 +7,11 @@ using FluentAssertions;
 namespace FC.Codeflix.Catalog.E2ETests.Consumers.Categories;
 
 [Trait("E2E/Consumers", "Category")]
-public sealed class CategoryConsumerTest(CategoryConsumerTestFixture fixture)
+public sealed class KafkaConsumerTest(CategoryConsumerTestFixture fixture)
     : IClassFixture<CategoryConsumerTestFixture>, IDisposable
 {
-    [Fact(DisplayName = nameof(CategoryEvent_whenOperationIsCreate_SavesCategory))]
-    public async Task CategoryEvent_whenOperationIsCreate_SavesCategory()
+    [Fact(DisplayName = nameof(CategoryEvent_WhenOperationIsCreate_SavesCategory))]
+    public async Task CategoryEvent_WhenOperationIsCreate_SavesCategory()
     {
         var message = fixture.BuildValidMessage("c");
         var category = message.Payload.After;
@@ -30,8 +30,8 @@ public sealed class CategoryConsumerTest(CategoryConsumerTestFixture fixture)
         document.CreatedAt.Date.Should().Be(category.CreatedAt.Date);
     }
 
-    [Fact(DisplayName = nameof(CategoryEvent_whenOperationIsUpdate_SavesCategory))]
-    public async Task CategoryEvent_whenOperationIsUpdate_SavesCategory()
+    [Fact(DisplayName = nameof(CategoryEvent_WhenOperationIsUpdate_SavesCategory))]
+    public async Task CategoryEvent_WhenOperationIsUpdate_SavesCategory()
     {
         var examplesList = fixture.GetCategoryModelList();
         await fixture.ElasticClient.IndexManyAsync(examplesList);
@@ -54,8 +54,8 @@ public sealed class CategoryConsumerTest(CategoryConsumerTestFixture fixture)
         document.CreatedAt.Date.Should().Be(category.CreatedAt.Date);
     }
 
-    [Fact(DisplayName = nameof(CategoryEvent_whenOperationIsDelete_DeletesCategory))]
-    public async Task CategoryEvent_whenOperationIsDelete_DeletesCategory()
+    [Fact(DisplayName = nameof(CategoryEvent_WhenOperationIsDelete_DeletesCategory))]
+    public async Task CategoryEvent_WhenOperationIsDelete_DeletesCategory()
     {
         var examplesList = fixture.GetCategoryModelList();
         await fixture.ElasticClient.IndexManyAsync(examplesList);
@@ -70,8 +70,8 @@ public sealed class CategoryConsumerTest(CategoryConsumerTestFixture fixture)
         persisted.Found.Should().BeFalse();
     }
 
-    [Fact(DisplayName = nameof(CategoryEvent_whenOperationIsRead_SavesCategory))]
-    public async Task CategoryEvent_whenOperationIsRead_SavesCategory()
+    [Fact(DisplayName = nameof(CategoryEvent_WhenOperationIsRead_SavesCategory))]
+    public async Task CategoryEvent_WhenOperationIsRead_SavesCategory()
     {
         var message = fixture.BuildValidMessage("r");
         var category = message.Payload.After;

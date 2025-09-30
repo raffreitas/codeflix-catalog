@@ -19,13 +19,12 @@ public sealed class CategoryConsumerTestFixture : CategoryTestFixtureBase
     public CategoryConsumerTestFixture()
     {
         _kafkaConfiguration = WebApplicationFactory.Services.GetRequiredService<IOptions<KafkaConfiguration>>().Value;
-        // Wait a little for the consumer to be assigned a Partition, mainly in case of rebalance
         Thread.Sleep(15_000);
     }
 
     public async Task PublishMessageAsync(object message)
     {
-        var config = new ProducerConfig { BootstrapServers = _kafkaConfiguration.BootstrapServers };
+        var config = new ProducerConfig { BootstrapServers = _kafkaConfiguration.CategoryConsumer.BootstrapServers };
         using var producer = new ProducerBuilder<string, string>(config).Build();
         var rawMessage = JsonSerializer.Serialize(message, SerializerConfiguration.JsonSerializerOptions);
         _ = await producer.ProduceAsync(

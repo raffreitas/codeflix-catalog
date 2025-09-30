@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services
     .AddUseCases()
-    .AddConsumers()
+    .AddConsumers(builder.Configuration)
     .AddElasticSearch(builder.Configuration)
     .AddRepositories()
     .AddGraphQLServer()
@@ -40,9 +40,12 @@ app.MapControllers();
 
 await app.RunAsync();
 
-public abstract partial class Program
+namespace FC.Codeflix.Catalog.Api
 {
-    protected Program()
+    public abstract partial class Program
     {
+        protected Program()
+        {
+        }
     }
 }

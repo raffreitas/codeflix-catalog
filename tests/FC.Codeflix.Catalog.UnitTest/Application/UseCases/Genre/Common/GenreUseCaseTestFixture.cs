@@ -1,5 +1,4 @@
 ﻿using FC.Codeflix.Catalog.Domain.Repositories;
-using FC.Codeflix.Catalog.Infra.Data.ES.Models;
 using FC.Codeflix.Catalog.Tests.Shared;
 
 using NSubstitute;

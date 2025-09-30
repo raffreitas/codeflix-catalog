@@ -1,7 +1,6 @@
 ﻿using Elastic.Clients.Elasticsearch;
 
 using FC.Codeflix.Catalog.Application.UseCases.Genres.GetGenresByIds;
-using FC.Codeflix.Catalog.Infra.Data.ES.Repositories;
 using FC.Codeflix.Catalog.IntegrationTests.Genres.Common;
 
 using FluentAssertions;
